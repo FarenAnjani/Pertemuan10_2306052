@@ -10,21 +10,23 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController(); 
+  
+  bool _isPasswordVisible = false;
 
-  Future<void> login() async {
+  Future<void> login() async{
     if (_formKey.currentState!.validate()) {
       final prefs = await SharedPreferences.getInstance();
-
-      await prefs.setBool('isLogin', true);
-      await prefs.setString('username', usernameController.text);
-      await prefs.setString('password', passwordController.text);
+      await prefs.setBool("isLogin", true);
+      
+      await prefs.setString("Username", usernameController.text); 
 
       Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const HomePage()),
+        context, 
+        MaterialPageRoute(builder: (_) => const HomePage())
       );
     }
   }
@@ -32,33 +34,36 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.grey[300],
       body: Center(
-        child: Padding(
+        child: Padding (
           padding: const EdgeInsets.all(20),
           child: Card(
             elevation: 5,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(15) 
             ),
             child: Padding(
-              padding: const EdgeInsets.all(25),
+              padding: const EdgeInsets.all(25), 
               child: Form(
                 key: _formKey,
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisSize: MainAxisSize.min, 
                   children: [
-                    const Icon(Icons.person, size: 80, color: Colors.blue,),
+                    const Icon(Icons.person, size: 80, color: Colors.green),
                     const SizedBox(height: 20,),
+                    
+                    // Input Username
                     TextFormField(
                       controller: usernameController,
                       decoration: InputDecoration(
-                        labelText: 'Username',
+                        labelText: "Username",
                         prefixIcon: const Icon(Icons.person),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                          borderRadius: BorderRadius.circular(10)
+                        )
                       ),
+                      // Validator Username
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Username tidak boleh kosong';
@@ -66,40 +71,58 @@ class _LoginPageState extends State<LoginPage> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 20,),
+                    const SizedBox(height: 15,),
+
+                    // Input Password
                     TextFormField(
                       controller: passwordController,
-                      obscureText: true,
+                      obscureText: !_isPasswordVisible, 
                       decoration: InputDecoration(
-                        labelText: 'Password',
+                        labelText: "Password",
                         prefixIcon: const Icon(Icons.lock),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isPasswordVisible = !_isPasswordVisible;
+                            });
+                          },
                         ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)
+                        )
                       ),
+                      // Validator Password
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Password tidak boleh kosong';
                         }
-                        if (value.length < 5) {
-                          return 'Password minimal 5 karakter';
+                        if (value.length < 6) {
+                          return 'Password minimal 6 karakter';
                         }
                         return null;
                       },
                     ),
-                    const SizedBox(height: 20,),
+                    const SizedBox(height: 25,),
+
+                    // Tombol Login
                     SizedBox(
                       width: double.infinity,
                       height: 50,
                       child: ElevatedButton(
                         onPressed: login,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
+                          backgroundColor: Colors.green,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(10)
                           )
                         ),
-                        child: const Text("login", style: TextStyle(fontSize: 16, color: Colors.white),),
+                        child: const Text(
+                          "Login",
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
                       ),
                     )
                   ],
