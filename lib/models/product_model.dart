@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 class ProductModel {
   // membuat var data
   final String name;
@@ -14,7 +13,7 @@ class ProductModel {
     required this.price
   });
 
-  // convert objek ke mmap
+  // convert objek ke map
   Map<String, dynamic> toMap(){
     return {
       'name': name,
