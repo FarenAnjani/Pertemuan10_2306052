@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pertemuan10_2306052/models/product_model.dart';
 import 'package:pertemuan10_2306052/pages/login_page.dart';
-import 'package:pertemuan10_2306052/pages/product_detail_page.dart';
+import 'package:pertemuan10_2306052/pages/product_page.dart';
 import 'package:pertemuan10_2306052/widgets/product_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:pertemuan10_2306052/pages/product_page.dart';
-
-
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

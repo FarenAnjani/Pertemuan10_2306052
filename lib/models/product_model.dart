@@ -1,16 +1,19 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 
 class ProductModel {
   // membuat var data
   final String name;
   final String description; // kalo kondisi data tidak wajib, tipe data diisi jd string?
   final int price;
+  final String image;
 
   // membuat constructor
   ProductModel({
     required this.name,
     required this.description,
-    required this.price
+    required this.price,
+    required this.image,
   });
 
   // convert objek ke map
@@ -18,7 +21,8 @@ class ProductModel {
     return {
       'name': name,
       'description': description,
-      'price': price
+      'price': price,
+      'image': image,
     };
   }
 
@@ -30,6 +34,7 @@ class ProductModel {
       name: map['name'] ?? '',
       description: map['description'] ?? '',
       price: map['price'] ?? 0,
+      image: map['image'] ?? '',
     );
   }
 
